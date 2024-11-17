@@ -61,17 +61,26 @@ def count_occurrences(long_string, search_term):
 # endregion
 
 # region Plots
-def plot_word_histogram(df, text_column, name_column, search_term):
+def plot_word_histogram(df, text_column, search_term):
     # Apply count_occurrences to the text column
     df['count'] = df[text_column].apply(lambda text: count_occurrences(text, search_term))
     
     # Create the figure
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.bar(df[name_column], df['count'], color='skyblue')
+    
+    # Plot the bar chart using df['name'] for the x-axis
+    ax.bar(df['name'], df['count'], color='skyblue')
+    
+    # Set labels and title
     ax.set_xlabel('Document Name', fontsize=12)
     ax.set_ylabel('Count of Search Term', fontsize=12)
     ax.set_title(f"Occurrences of '{search_term}' in Each Document", fontsize=14)
-    ax.set_xticklabels(df[name_column], rotation=45, ha='right')
+    
+    # Adjust the x-ticks to show the document names
+    ax.set_xticks(df['name'])  # Set the positions of the ticks to df['name']
+    ax.set_xticklabels(df['name'], rotation=45, ha='right')  # Set labels to the actual names and rotate for readability
+    
+    # Adjust layout to ensure everything fits
     plt.tight_layout()
 
     return fig
