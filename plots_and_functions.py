@@ -1,8 +1,6 @@
-import pandas as pd
 import re
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
-import nltk
 from collections import Counter
 import matplotlib.pyplot as plt
 

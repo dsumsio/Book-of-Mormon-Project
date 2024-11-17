@@ -1,2 +1,8 @@
 pandas
 spacy
+streamlit
+plotly
+re
+nltk
+collections
+matplotlib
