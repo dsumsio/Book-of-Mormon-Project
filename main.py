@@ -3,6 +3,8 @@ import pandas as pd
 import plotly.express as px
 from plots_and_functions import *
 import re
+import nltk
+nltk.download('wordnet')
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
 from collections import Counter
