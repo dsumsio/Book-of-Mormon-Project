@@ -1,5 +1,12 @@
 import streamlit as st
+import pandas as pd
+import plotly.express as px
+from plots_and_functions import *
 
+df = pd.read_csv('df.csv')
+
+with open('mormon13.txt', 'r') as file:
+    bom_text = file.read()
 
 st.title('Book of Mormon Text Analysis Project')
 
@@ -12,3 +19,15 @@ with st.sidebar:
         st.write("Poof! You're Dawg")
     else:
         st.write('')
+
+
+tab1, tab2 = st.tabs(['Entire BOM', 'Individual Books'])
+with tab1:
+    fig1 = plot_word_histogram(data, year = year_input, n=n_names)
+
+    st.plotly_chart(fig)
+
+with tab2:
+    st.write('This tab will explore words and phrases across individual books in the Book of Mormon.')
+    fig2 = plot_word_histogram(df, 'text_processed', 'name', input_word)
+    st.plotly_chart(fig2)
