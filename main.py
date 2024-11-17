@@ -23,9 +23,9 @@ with st.sidebar:
 
 tab1, tab2 = st.tabs(['Entire BOM', 'Individual Books'])
 with tab1:
-    fig1 = plot_word_histogram(data, year = year_input, n=n_names)
-
-    st.plotly_chart(fig)
+    # fig1 = plot_word_histogram(data, year = year_input, n=n_names)
+    fig1 = 1
+    # st.plotly_chart(fig)
 
 with tab2:
     st.write('This tab will explore words and phrases across individual books in the Book of Mormon.')
