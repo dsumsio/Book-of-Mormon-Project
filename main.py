@@ -2,6 +2,11 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from plots_and_functions import *
+import re
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
+from collections import Counter
+import matplotlib.pyplot as plt
 
 df = pd.read_csv('df.csv')
 
