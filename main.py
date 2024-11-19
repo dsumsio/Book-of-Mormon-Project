@@ -15,11 +15,11 @@ df = pd.read_csv('df.csv', index_col='Unnamed: 0')
 st.title('Book of Mormon Text Analysis')
 
 with st.sidebar:
-    st.subheader('Word Analysis')
+    st.subheader('WORD ANALYSIS')
     input_word = st.text_input('Enter a word:', value = 'Christ')
     most_least = st.radio('Find the 10:', ['Most Common Words', 'Least Common Words'])
 
-    st.subheader('Phrase Analysis')
+    st.subheader('PHRASE ANALYSIS')
     input_phrase = st.text_input('Enter a phrase:', value = 'And it came to pass')
 
 
@@ -45,16 +45,18 @@ with tab2:
     st.write('This first graph is the total number of occurances in each book as well as the entire book of mormon. Use the entry box on the left side of your screen to input a word and the graph will automatically update showing the distribution of the word usage in different books. Hover your mouse of the bar to see the specific values.')    
     # Fig1 = count of words
     df_copy1 = df.copy()
-    fig2 = plot_word_histogram(df_copy1, 'text_processed', input_word)
-    st.plotly_chart(fig2, key="fig2_chart")
+    fig1 = plot_word_histogram(df_copy1, 'text_processed', input_word)
+    st.plotly_chart(fig1, key="fig1_chart")
 
     st.write('This graph is similar to above only that it is normalized by text length. This is helpful because it takes into account the different lengths of books. It basically shows that if each book was the same length then the height of the bar shows how often this word would be used. The units on the bars are word frequency per character in book.')
 
     # Fig2 = normalized count of words
     df_copy2 = df.copy()
-    fig3 = plot_word_histogram_length(df_copy2, 'text_processed', input_word)
-    st.plotly_chart(fig3, key="fig3_chart")
+    fig2 = plot_word_histogram_length(df_copy2, 'text_processed', input_word)
+    st.plotly_chart(fig2, key="fig2_chart")
 
+    st.subheader('Most and Least Common Words')
+    st.write('This section explores the most and least common 10 words across books and the entire book of mormon. Use the Toggle on the left hand side of the page to switch between the most common and least common words. If output is truncated because of the length, hover mouse over top right corner of the table to make it full screen')
     ## Most common/least common words
     df['most_common'], df['least_common'] = zip(*df['text_processed'].apply(get_most_and_least_common_words))
     if most_least == 'Most Common Words':
@@ -64,6 +66,9 @@ with tab2:
     st.dataframe(result_df)
 
 with tab3:
-    # fig1 = plot_word_histogram(data, year = year_input, n=n_names)
-    fig1 = 1
-    # st.plotly_chart(fig)
+    st.write('This tab will explore phrases across individual books in the Book of Mormon.')
+    st.subheader('Phrase Occurances')
+    st.write('This first graph is the total number of occurances in each book as well as the entire book of mormon of the specified phrase. Use the entry box on the left side of your screen to input a phrase and the graph will automatically update showing the distribution of the word usage in different books. Hover your mouse of the bar to see the specific values.')    
+    df_copy3 = df.copy()
+    fig3 = plot_word_histogram(df_copy3, 'text_processed', input_phrase)
+    st.plotly_chart(fig3, key="fig3_chart")
