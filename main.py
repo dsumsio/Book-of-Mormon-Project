@@ -62,6 +62,12 @@ with tab2:
     fig2 = plot_word_histogram_length(df_copy2, 'text_processed', input_word)
     st.plotly_chart(fig2, key="fig2_chart")
 
+    st.subheader(f'Instances of {input_word} in Specified Book')
+    # Instances of input_word
+    input_book = st.radio(f'Find instances of{input_word} in', ['Introduction', '1 Nephi', '2 Nephi', 'Jacob', 'Enos', 'Jarom', 'Omni', 'Words of Mormon', 'Mosiah', 'Alma', 'Helaman', '3 Nephi', '4 Nephi', 'Mormon', 'Ether', 'Moroni', 'Entire Book'])
+    final_df = find_word_instances(df, input_book, input_word)
+    st.data_editor(final_df)
+
     st.subheader('Most and Least Common Words')
     st.write('This section explores the most and least common 10 words across books and the entire book of mormon. Use the Toggle on the left hand side of the page to switch between the most common and least common words. If output is truncated because of the length, hover mouse over top right corner of the table to make it full screen')
     ## Most common/least common words
