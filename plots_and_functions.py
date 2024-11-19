@@ -136,6 +136,21 @@ def plot_word_histogram_length(df, text_column, search_term):
 # endregion
 
 # region Plots - PHRASES
+def get_most_common_phrases(text, min_phrase_length=2, max_phrase_length=6, top_n=10):
+    words = re.findall(r'\b\w+\b', text)  # Tokenize the text by words
+    top_phrases = {}  # Dictionary to hold the top phrases for each length
+    
+    # Loop over phrase lengths from min_phrase_length to max_phrase_length
+    for n in range(min_phrase_length, max_phrase_length + 1):
+        # Create n-word phrases using zip to get overlapping phrases
+        phrases = [' '.join(words[i:i+n]) for i in range(len(words) - n + 1)]
+        
+        # Count phrases and get the top_n most common
+        phrase_counts = Counter(phrases).most_common(top_n)
+        top_phrases[f"{n}-word phrases"] = phrase_counts
+    
+    return top_phrases
+
 def plot_top_phrases(df, text_column, phrase_length, max_phrases):
     # Create a list to hold top phrases across all rows
     all_phrases = []
