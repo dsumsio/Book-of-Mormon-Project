@@ -26,17 +26,12 @@ with st.sidebar:
 
 
 
-    if st.button("Click me to turn yourself into a Dog"):
-        st.write("Poof! You're Dawg")
-    else:
-        st.write('')
+    
 
 
 tab1, tab2, tab3, tab4 = st.tabs(['Project', 'Word', 'Phrase', 'Author'])
 
 with tab1:
-    st.write("The Book of Mormon is more than just a good religous book.")
-             
     st.write("Ever since a young boy I have been reading this book. I began as I was encouraged by my parents and religous leaders to give it a try. Every time I read the book I have found peace and comfort. This encouraged me to make it a central part of my life. The lessons I have learned through it's principles has made me a better man as I have tried to follow Jesus Christ more.")
              
     st.write("I used to think that the Book of Mormon was magic in a way. You'd read some verses and POOF! The spirt came and it made things better. As I have matured a bit I don't think that is the best way to understand why I love the Book of Mormon so much. Rather, the Book of Mormon teaches me about Christ. As I try to incorporate the teachings of Christ into my life I invite the spirt into my life. This in turn makes me happier and gives me peace of concious. I love reading the Book of Mormon.")
