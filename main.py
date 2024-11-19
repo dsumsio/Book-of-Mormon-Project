@@ -26,15 +26,15 @@ with st.sidebar:
 
 
 
-    if st.button("Click me to turn yourself into a Dog"):
-        st.write("Poof! You're Dawg")
-    else:
-        st.write('')
+    
 
 
 tab1, tab2, tab3, tab4 = st.tabs(['Project', 'Word', 'Phrase', 'Author'])
 
 with tab1:
+    st.slider('Select Phrase Length', min_value = 2, max_value =10, value = 4)
+    st.write('hello world')
+    st.subheader('try this')
     text = """The Book of Mormon is more than just a good religous book.
              
              Ever since a young boy I have been reading this book. I began as I was encouraged by my parents and religous leaders to give it a try. Every time I read the book I have found peace and comfort. This encouraged me to make it a central part of my life. The lessons I have learned through it's principles has made me a better man as I have tried to follow Jesus Christ more.
