@@ -43,9 +43,16 @@ def get_most_common_phrases(text, min_phrase_length=2, max_phrase_length=6, top_
 def get_most_and_least_common_words(text):
     words = text.split()
     word_counts = Counter(words)
-    most_common = word_counts.most_common(1)[0][0] if word_counts else None
-    least_common = word_counts.most_common()[-1][0] if word_counts else None
-    return most_common, least_common
+    
+    # Get the 10 most common words
+    most_common = [word for word, _ in word_counts.most_common(10)]
+    most_common_str = ", ".join(most_common) if most_common else None
+    
+    # Get the 10 least common words
+    least_common = [word for word, _ in word_counts.most_common()[-10:]]
+    least_common_str = ", ".join(least_common) if least_common else None
+    
+    return most_common_str, least_common_str
 
 def count_occurrences(long_string, search_term):
     # Preprocess the search term

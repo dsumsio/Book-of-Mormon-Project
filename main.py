@@ -17,7 +17,7 @@ st.title('Book of Mormon Text Analysis')
 with st.sidebar:
     st.subheader('Word Analysis')
     input_word = st.text_input('Enter a word:', value = 'Christ')
-    most_least = st.radio('Find the:', ['Most Common Word', 'Least Common Word'])
+    most_least = st.radio('Find the 10:', ['Most Common Words', 'Least Common Words'])
 
     st.subheader('Phrase Analysis')
     input_phrase = st.text_input('Enter a phrase:', value = 'And it came to pass')
