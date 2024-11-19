@@ -56,7 +56,7 @@ with tab2:
     st.plotly_chart(fig3, key="fig3_chart")
 
     ## Most common/least common words
-    df['most_common'], df['least_common'] = zip(*df['processed_text'].apply(get_most_and_least_common_words))
+    df['most_common'], df['least_common'] = zip(*df['text_processed'].apply(get_most_and_least_common_words))
     if most_least == 'Most Common Word':
         result_df = df[['name', 'most_common']]
     if most_least == 'Least Common Word':
