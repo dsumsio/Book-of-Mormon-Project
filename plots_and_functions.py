@@ -69,11 +69,10 @@ def plot_word_histogram(df, text_column, search_term):
     df['count'] = df[text_column].apply(lambda text: count_occurrences(text, search_term))
     
     # Create the histogram
-    fig = px.histogram(
+    fig = px.bar(
         df,
         x='name',  # Ensure 'name' exists in your DataFrame
         y='count',  # Using count as the y-axis
-        nbins=len(df),  # One bin per name (optional)
         title=f"Occurrences of '{search_term}'",
         labels={'name': 'Names', 'count': 'Occurrences'},
     )
