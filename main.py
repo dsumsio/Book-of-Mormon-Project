@@ -35,8 +35,7 @@ with st.sidebar:
 tab1, tab2, tab3, tab4 = st.tabs(['Project', 'Word', 'Phrase', 'Author'])
 
 with tab1:
-    st.write('hello?')
-    st.write("""The Book of Mormon is more than just a good religous book.
+    text = """The Book of Mormon is more than just a good religous book.
              
              Ever since a young boy I have been reading this book. I began as I was encouraged by my parents and religous leaders to give it a try. Every time I read the book I have found peace and comfort. This encouraged me to make it a central part of my life. The lessons I have learned through it's principles has made me a better man as I have tried to follow Jesus Christ more.
              
@@ -49,9 +48,7 @@ with tab1:
              This is no where near completely finished. Rather it is a start to my desire to incorporate my secular learning into spiritual learning. I don't want to merely just keep reading the Book of Mormon in the same way every time. Rather I hope to use this tool and additional features that I will add in the future.
              
              My ultimate desire is to become more like Christ by learning of Him. I hope this tool can be useful to you as you study the Book of Mormon.""")
-    
-    
-
+    st.write(text)
 
 with tab2:
     st.write('This tab will explore words across individual books in the Book of Mormon.')
