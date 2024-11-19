@@ -89,7 +89,29 @@ def plot_word_histogram(df, text_column, search_term):
     return fig
 
 
-
+def plot_word_histogram_length(df, text_column, search_term):
+    # Ensure the DataFrame has a 'count' column based on occurrences of the search term
+    df['count'] = df[text_column].apply(lambda text: count_occurrences(text, search_term))
+    
+    # Create the histogram
+    fig = px.bar(
+        df,
+        x='name',  # Ensure 'name' exists in your DataFrame
+        y='count',  # Using count as the y-axis
+        title=f"Occurrences of '{search_term}'",
+        labels={'name': 'Names', 'count': 'Occurrences'},
+    )
+    
+    # Customize the layout
+    fig.update_layout(
+        xaxis_title="Names",
+        yaxis_title="Count of Occurrences",
+        xaxis=dict(tickangle=45),  # Rotate x-axis labels
+        bargap=0.1  # Adjust bar spacing
+    )
+    
+    # Show the figure
+    return fig
 
 
 
