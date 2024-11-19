@@ -73,31 +73,33 @@ def count_occurrences(long_string, search_term):
     return count
 
 
+
 def find_word_instances(df, book_name, input_word):
     # Initialize lemmatizer
     lemmatizer = WordNetLemmatizer()
-    
+
     # Lowercase and lemmatize the input word
     input_word = lemmatizer.lemmatize(input_word.lower())
     
     # Filter the DataFrame for the selected book
-    filtered_df = df[df['name'].str.lower() == book_name.lower()]
+    if book_name.lower() != "entire book":
+        filtered_df = df[df['name'].str.lower() == book_name.lower()]
+    else:
+        filtered_df = df  # No filtering, consider all rows
     
     # Initialize an empty list to store the results
     results = []
     
     # Iterate over the filtered DataFrame
     for _, row in filtered_df.iterrows():
-        # Find all matches of the input word in the text
-        matches = [m.start() for m in re.finditer(rf'\b{input_word}\b', row['text'])]
-        for match in matches:
-            # Split the text into words
-            words = row['text'].split()
-            # Find the position of the match in the words list
-            word_pos = row['text'][:match].count(' ')  # Count spaces before the match
-            # Extract 5 words before and after
-            snippet = ' '.join(words[max(word_pos - 5, 0):word_pos + 6])
-            results.append(snippet)
+        # Ensure text is lowercased and split into words
+        words = row['text'].lower().split()
+        # Iterate through the words to find matches
+        for i, word in enumerate(words):
+            if lemmatizer.lemmatize(word) == input_word:
+                # Extract 5 words before and after
+                snippet = ' '.join(words[max(0, i - 5):i + 6])
+                results.append(snippet)
     
     # Create the resulting DataFrame
     df_final = pd.DataFrame({'Text': results})
