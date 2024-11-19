@@ -93,19 +93,25 @@ def plot_word_histogram_length(df, text_column, search_term):
     # Ensure the DataFrame has a 'count' column based on occurrences of the search term
     df['count'] = df[text_column].apply(lambda text: count_occurrences(text, search_term))
     
-    # Create the histogram
+    # Calculate the length of each text
+    df['str_length'] = df[text_column].apply(len)
+    
+    # Normalize the count by dividing by text length
+    df['normalized_count'] = df['count'] / df['str_length']
+    
+    # Create the bar plot using normalized counts
     fig = px.bar(
         df,
         x='name',  # Ensure 'name' exists in your DataFrame
-        y='count',  # Using count as the y-axis
-        title=f"Occurrences of '{search_term}'",
-        labels={'name': 'Names', 'count': 'Occurrences'},
+        y='normalized_count',  # Use normalized counts as the y-axis
+        title=f"Occurrences of '{search_term}' (Normalized by Text Length)",
+        labels={'name': 'Names', 'normalized_count': 'Occurrences (Normalized)'},
     )
     
     # Customize the layout
     fig.update_layout(
         xaxis_title="Names",
-        yaxis_title="Count of Occurrences",
+        yaxis_title="Normalized Count of Occurrences",
         xaxis=dict(tickangle=45),  # Rotate x-axis labels
         bargap=0.1  # Adjust bar spacing
     )
