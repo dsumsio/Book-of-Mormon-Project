@@ -87,7 +87,7 @@ def plot_word_histogram(df, text_column, search_term):
     )
     
     # Show the figure
-    fig.show()
+    return fig
 
 
 
