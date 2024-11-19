@@ -11,6 +11,7 @@ from collections import Counter
 import matplotlib.pyplot as plt
 
 df = pd.read_csv('df.csv', index_col='Unnamed: 0')
+lemmatizer = WordNetLemmatizer()
 
 st.title('Book of Mormon Text Analysis')
 

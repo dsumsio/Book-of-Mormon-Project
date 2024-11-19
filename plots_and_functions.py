@@ -126,15 +126,26 @@ def plot_word_histogram_length(df, text_column, search_term):
 # endregion
 
 # region Plots - PHRASES
+lemmatizer = WordNetLemmatizer()
+def preprocess_text(text):
+    # Tokenize, lemmatize, and join the words back into a single string
+    tokens = word_tokenize(text.lower())  # Tokenize and lowercase
+    lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
+    return ' '.join(lemmatized_tokens)
 
-# Helper function to count occurrences of a phrase in a string
+# Helper function to count phrase occurrences
 def count_phrase_occurrences(text, phrase):
     # Escape special characters in the phrase for regex, count all non-overlapping matches
     return len(re.findall(re.escape(phrase), text, flags=re.IGNORECASE))
 
+# Function to create the plot
 def plot_word_histogram(df, text_column, search_term):
-    # Ensure the DataFrame has a 'count' column based on occurrences of the search term
-    df['count'] = df[text_column].apply(lambda text: count_phrase_occurrences(text, search_term))
+    # Preprocess text column and search term
+    df['processed_text'] = df[text_column].apply(preprocess_text)
+    processed_search_term = preprocess_text(search_term)
+    
+    # Ensure the DataFrame has a 'count' column based on occurrences of the processed search term
+    df['count'] = df['processed_text'].apply(lambda text: count_phrase_occurrences(text, processed_search_term))
     
     # Create the histogram
     fig = px.bar(
@@ -155,7 +166,6 @@ def plot_word_histogram(df, text_column, search_term):
     
     # Show the figure
     return fig
-
 
 
 
