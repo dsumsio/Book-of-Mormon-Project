@@ -21,10 +21,7 @@ with st.sidebar:
     most_least = st.radio('Find the 10:', ['Most Common Words', 'Least Common Words'])
 
     st.subheader('PHRASE ANALYSIS')
-    input_phrase = st.text_input('Enter a phrase:', value = 'And it came to pass')
-
-
-    phrase_length = st.slider('Year', min_value = 1880, max_value =2023, value = 2000)
+    phrase_length = st.slider('Select Phrase Length', min_value = 2, max_value =10, value = 4)
 
 
 
@@ -71,5 +68,5 @@ with tab3:
     st.subheader('Phrase Occurances')
     st.write('This first graph is the total number of occurances in each book as well as the entire book of mormon of the specified phrase. Use the entry box on the left side of your screen to input a phrase and the graph will automatically update showing the distribution of the word usage in different books. Hover your mouse of the bar to see the specific values.')    
     df_copy3 = df.copy()
-    fig3 = plot_word_histogram(df_copy3, 'text_processed', input_phrase)
+    fig3 = plot_top_phrases(df_copy3, 'text_processed', phrase_length)
     st.plotly_chart(fig3, key="fig3_chart")

@@ -40,6 +40,14 @@ def get_most_common_phrases(text, min_phrase_length=2, max_phrase_length=6, top_
     
     return top_phrases
 
+def get_most_common_phrases(text, phrase_length=4, top_n=10):    
+    words = re.findall(r'\b\w+\b', text)  # Tokenize the text by words
+    # Create n-word phrases using zip to get overlapping phrases
+    phrases = [' '.join(words[i:i+phrase_length]) for i in range(len(words) - phrase_length + 1)]
+    # Count phrases and get the top n most common
+    phrase_counts = Counter(phrases).most_common(top_n)
+    return phrase_counts
+
 def get_most_and_least_common_words(text):
     words = text.split()
     word_counts = Counter(words)
@@ -126,54 +134,35 @@ def plot_word_histogram_length(df, text_column, search_term):
 # endregion
 
 # region Plots - PHRASES
-lemmatizer = WordNetLemmatizer()
-def preprocess_text(text):
-    # Tokenize, lemmatize, and join the words back into a single string
-    tokens = word_tokenize(text.lower())  # Tokenize and lowercase
-    lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
-    return ' '.join(lemmatized_tokens)
+def plot_top_phrases(df, text_column, phrase_length):
+    # Create a DataFrame to store the top phrases across all rows
+    all_phrases = []
+    for _, row in df.iterrows():
+        top_phrases = get_most_common_phrases(row[text_column], phrase_length)
+        all_phrases.extend(top_phrases)  # Collect all phrases from each row
 
-# Helper function to count phrase occurrences
-def count_phrase_occurrences(text, phrase):
-    # Escape special characters in the phrase for regex, count all non-overlapping matches
-    return len(re.findall(re.escape(phrase), text, flags=re.IGNORECASE))
-
-# Function to create the plot
-def plot_word_histogram(df, text_column, search_term):
-    # Preprocess text column and search term
-    df['processed_text'] = df[text_column].apply(preprocess_text)
-    processed_search_term = preprocess_text(search_term)
+    # Combine counts of the same phrases
+    combined_phrases = Counter(dict(all_phrases)).most_common()
     
-    # Ensure the DataFrame has a 'count' column based on occurrences of the processed search term
-    df['count'] = df['processed_text'].apply(lambda text: count_phrase_occurrences(text, processed_search_term))
+    # Create a DataFrame for the phrases and their counts
+    phrase_df = pd.DataFrame(combined_phrases, columns=['Phrase', 'Count'])
     
-    # Create the histogram
+    # Plot a horizontal bar chart
     fig = px.bar(
-        df,
-        x='name',  # Ensure 'name' exists in your DataFrame
-        y='count',  # Using count as the y-axis
-        title=f"Occurrences of '{search_term}' In Each Book",
-        labels={'name': 'Names', 'count': 'Occurrences'},
+        phrase_df,
+        x='Count',
+        y='Phrase',
+        orientation='h',  # Horizontal bars
+        title=f"Top {len(phrase_df)} {phrase_length}-Word Phrases",
+        labels={'Phrase': 'Phrase', 'Count': 'Occurrences'}
     )
     
     # Customize the layout
     fig.update_layout(
-        xaxis_title="Book",
-        yaxis_title="Count",
-        xaxis=dict(tickangle=45),  # Rotate x-axis labels
-        bargap=0.1  # Adjust bar spacing
+        yaxis=dict(tickangle=0),  # Keep y-axis labels readable
+        xaxis_title="Occurrences",
+        yaxis_title="Phrases",
+        bargap=0.1,  # Adjust bar spacing
     )
     
-    # Show the figure
     return fig
-
-
-
-
-
-
-
-
-
-
-
