@@ -135,7 +135,7 @@ def plot_word_histogram_length(df, text_column, search_term):
 
 # region Plots - PHRASES
 def plot_top_phrases(df, text_column, phrase_length):
-    # Create a DataFrame to store the top phrases across all rows
+    # Create a list to hold top phrases across all rows
     all_phrases = []
     for _, row in df.iterrows():
         top_phrases = get_most_common_phrases(row[text_column], phrase_length)
@@ -143,10 +143,18 @@ def plot_top_phrases(df, text_column, phrase_length):
 
     # Combine counts of the same phrases
     combined_phrases = Counter(dict(all_phrases)).most_common()
-    
+
+    # Debugging: Check the combined phrases
+    print("Combined Phrases:", combined_phrases)
+
+    # Handle case where no phrases are found
+    if not combined_phrases:
+        st.warning(f"No {phrase_length}-word phrases found.")
+        return None
+
     # Create a DataFrame for the phrases and their counts
     phrase_df = pd.DataFrame(combined_phrases, columns=['Phrase', 'Count'])
-    
+
     # Plot a horizontal bar chart
     fig = px.bar(
         phrase_df,
@@ -156,7 +164,7 @@ def plot_top_phrases(df, text_column, phrase_length):
         title=f"Top {len(phrase_df)} {phrase_length}-Word Phrases",
         labels={'Phrase': 'Phrase', 'Count': 'Occurrences'}
     )
-    
+
     # Customize the layout
     fig.update_layout(
         yaxis=dict(tickangle=0),  # Keep y-axis labels readable
@@ -164,5 +172,5 @@ def plot_top_phrases(df, text_column, phrase_length):
         yaxis_title="Phrases",
         bargap=0.1,  # Adjust bar spacing
     )
-    
+
     return fig
