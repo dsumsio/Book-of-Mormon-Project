@@ -38,8 +38,8 @@ with tab2:
     st.write('This tab will explore words and phrases across individual books in the Book of Mormon.')
     df_copy1 = df.copy()
     fig2 = plot_word_histogram(df_copy1, 'text_processed', input_word)
-    st.plotly_chart(fig2)
+    st.plotly_chart(fig2, key="fig2_chart")
 
     df_copy2 = df.copy()
     fig3 = plot_word_histogram_length(df_copy2, 'text_processed', input_word)
-    st.plotly_chart(fig3)
+    st.plotly_chart(fig3, key="fig3_chart")
