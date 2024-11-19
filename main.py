@@ -57,9 +57,9 @@ with tab2:
 
     ## Most common/least common words
     df['most_common'], df['least_common'] = zip(*df['text_processed'].apply(get_most_and_least_common_words))
-    if most_least == 'Most Common Word':
+    if most_least == 'Most Common Words':
         result_df = df[['name', 'most_common']]
-    if most_least == 'Least Common Word':
+    elif most_least == 'Least Common Words':
         result_df = df[['name', 'least_common']]
     st.dataframe(result_df)
 
