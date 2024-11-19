@@ -40,15 +40,14 @@ def get_most_common_phrases(text, min_phrase_length=2, max_phrase_length=6, top_
     
     return top_phrases
 
-def most_common_words(text, top_n=10):
-    # Use regular expressions to remove punctuation and split by whitespace
-    words = re.findall(r'\b\w+\b', text.lower())
+def get_most_and_least_common_words(text):
+    words = text.split()
     word_counts = Counter(words)
-    
-    # Get the most common words
-    most_common = word_counts.most_common(top_n)
-    
-    return most_common
+    # Most common
+    most_common_word = word_counts.most_common(1)[0][0] if word_counts else None
+    # Least common (choose one if there's a tie)
+    least_common_word = min(word_counts, key=word_counts.get) if word_counts else None
+    return most_common_word, least_common_word
 
 def count_occurrences(long_string, search_term):
     # Preprocess the search term
