@@ -73,14 +73,14 @@ def plot_word_histogram(df, text_column, search_term):
         df,
         x='name',  # Ensure 'name' exists in your DataFrame
         y='count',  # Using count as the y-axis
-        title=f"Occurrences of '{search_term}'",
+        title=f"Occurrences of '{search_term}' In Each Book",
         labels={'name': 'Names', 'count': 'Occurrences'},
     )
     
     # Customize the layout
     fig.update_layout(
-        xaxis_title="Names",
-        yaxis_title="Count of Occurrences",
+        xaxis_title="Book",
+        yaxis_title="Count",
         xaxis=dict(tickangle=45),  # Rotate x-axis labels
         bargap=0.1  # Adjust bar spacing
     )
@@ -104,14 +104,14 @@ def plot_word_histogram_length(df, text_column, search_term):
         df,
         x='name',  # Ensure 'name' exists in your DataFrame
         y='normalized_count',  # Use normalized counts as the y-axis
-        title=f"Occurrences of '{search_term}' (Normalized by Text Length)",
+        title=f"Occurrences of '{search_term}' In Each Book (Normalized by Text Length)",
         labels={'name': 'Names', 'normalized_count': 'Occurrences (Normalized)'},
     )
     
     # Customize the layout
     fig.update_layout(
-        xaxis_title="Names",
-        yaxis_title="Normalized Count of Occurrences",
+        xaxis_title="Book",
+        yaxis_title="Count/Length of Book",
         xaxis=dict(tickangle=45),  # Rotate x-axis labels
         bargap=0.1  # Adjust bar spacing
     )
