@@ -22,6 +22,7 @@ with st.sidebar:
 
     st.subheader('PHRASE ANALYSIS')
     phrase_length = st.slider('Select Phrase Length', min_value = 2, max_value =10, value = 4)
+    max_phrases = st.slider("Select number of phrases to display", min_value=5, max_value=20, value=10)
 
 
 
@@ -68,5 +69,5 @@ with tab3:
     st.subheader('Phrase Occurances')
     st.write('This first graph is the total number of occurances in each book as well as the entire book of mormon of the specified phrase. Use the entry box on the left side of your screen to input a phrase and the graph will automatically update showing the distribution of the word usage in different books. Hover your mouse of the bar to see the specific values.')    
     df_copy3 = df.copy()
-    fig3 = plot_top_phrases(df_copy3, 'text_processed', phrase_length)
+    fig3 = plot_top_phrases(df_copy3, 'text_processed', phrase_length, max_phrases)
     st.plotly_chart(fig3, key="fig3_chart")

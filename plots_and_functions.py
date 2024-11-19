@@ -136,15 +136,15 @@ def plot_word_histogram_length(df, text_column, search_term):
 # endregion
 
 # region Plots - PHRASES
-def plot_top_phrases(df, text_column, phrase_length):
+def plot_top_phrases(df, text_column, phrase_length, max_phrases):
     # Create a list to hold top phrases across all rows
     all_phrases = []
     for _, row in df.iterrows():
-        top_phrases = get_most_common_phrases(row[text_column], phrase_length)
-        all_phrases.extend(top_phrases)  # Collect all phrases from each row
+        top_phrases = get_most_common_phrases(row[text_column], min_phrase_length=phrase_length, max_phrase_length=phrase_length, top_n=max_phrases)
+        all_phrases.extend(top_phrases.get(f"{phrase_length}-word phrases", []))  # Collect all phrases from each row
 
     # Combine counts of the same phrases
-    combined_phrases = Counter(dict(all_phrases)).most_common()
+    combined_phrases = Counter(dict(all_phrases)).most_common(max_phrases)
 
     # Debugging: Check the combined phrases
     print("Combined Phrases:", combined_phrases)
@@ -163,7 +163,7 @@ def plot_top_phrases(df, text_column, phrase_length):
         x='Count',
         y='Phrase',
         orientation='h',  # Horizontal bars
-        title=f"Top {len(phrase_df)} {phrase_length}-Word Phrases",
+        title=f"Top {max_phrases} {phrase_length}-Word Phrases",
         labels={'Phrase': 'Phrase', 'Count': 'Occurrences'}
     )
 
