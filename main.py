@@ -11,7 +11,8 @@ from collections import Counter
 import matplotlib.pyplot as plt
 
 df = pd.read_csv('df.csv', index_col='Unnamed: 0')
-lemmatizer = WordNetLemmatizer()
+df_writers = pd.read_csv('author_bom.csv')
+
 
 st.title('Book of Mormon Text Analysis')
 
@@ -32,7 +33,7 @@ with st.sidebar:
         st.write('')
 
 
-tab1, tab2, tab3 = st.tabs(['Project', 'Word', 'Phrase'])
+tab1, tab2, tab3, tab4 = st.tabs(['Project', 'Word', 'Phrase', 'Author'])
 
 with tab1:
     st.write('Add text here')
@@ -71,3 +72,16 @@ with tab3:
     df_copy3 = df.copy()
     fig3 = plot_top_phrases(df_copy3, 'text_processed', phrase_length, max_phrases)
     st.plotly_chart(fig3, key="fig3_chart")
+
+with tab4:
+    st.write('One of the greatest lessons I have learned in this class so far is to really try to understand the writer and author of the story. Often times they are trying to communicate something by using history. As we better understand their background and reasoning for inlcuding certain phrases we can have a greater appreciation for the messages. This is a simplistic attempt to quantify this. Use the Word input textbox on the left so see the frequency used by the writers. Hover your mouse over the specific columns in the plots to see the specific values.')
+    df_writers_copy1 = df_writers.copy()
+    fig4 = plot_word_histogram(df_writers_copy1, 'Combined_Text', input_word)
+    st.plotly_chart(fig4, key="fig4_chart")
+
+    st.write("This graph is similar to above only that it is normalized by text length. This is helpful because it takes into account the different lengths of writer content. It basically shows that if each writer wrote the same amount then the height of the bar shows how often this word would be used. The units on the bars are word frequency per character in author's books.")
+
+    # Fig2 = normalized count of words
+    df_writers_copy2 = df_writers.copy()
+    fig5 = plot_word_histogram_length(df_writers_copy2, 'Combined_Text', input_word)
+    st.plotly_chart(fig5, key="fig5_chart")
