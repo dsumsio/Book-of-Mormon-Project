@@ -35,7 +35,19 @@ with st.sidebar:
 tab1, tab2, tab3, tab4 = st.tabs(['Project', 'Word', 'Phrase', 'Author'])
 
 with tab1:
-    st.write('Add text here')
+    st.write("""The Book of Mormon is more than just a good religous book.
+             
+             Ever since a young boy I have been reading this book. I began as I was encouraged by my parents and religous leaders to give it a try. Every time I read the book I have found peace and comfort. This encouraged me to make it a central part of my life. The lessons I have learned through it's principles has made me a better man as I have tried to follow Jesus Christ more.
+             
+             I used to think that the Book of Mormon was magic in a way. You'd read some verses and POOF! The spirt came and it made things better. As I have matured a bit I don't think that is the best way to understand why I love the Book of Mormon so much. Rather, the Book of Mormon teaches me about Christ. As I try to incorporate the teachings of Christ into my life I invite the spirt into my life. This in turn makes me happier and gives me peace of concious. I love reading the Book of Mormon.
+             
+             Today, I am in my senior year at BYU studying Statistics. I have had the opportunity to work closely with some researchers involving text analysis of Hospital Medical Records. The practices we incorporated there facinated me with a desire to apply those principles to other diciplines. Naturally, I wanted to somehow incorporate it into my study of the Book of Mormon. As life often is, I discounted those promptings for sometime reasoning that I read the Book everyday and it wasn't necessary to take the time to do this. As I entered this class and heard about the project option, I was once again prompted to perform text anaylsis on the Book of Mormon. I tried to push it away but the thought would not leave me. So I began. As I did so my wife asked me what I was doing and I explained to her some of my thoughts and feelings regarding this project. She suggested that I compile it in such a way that others could benefit from it too rather than just another research paper that ends up in the large pile of unread junk.
+             
+             Taking her advice, I've started to create this website/application to perform text analysis on the Book of Mormon. It is somewhat simple right now but it incorporates over 500 lines of code plus the files containing the text of the Book of Mormon. Spending over 15 hours thus far, I've decided that this will be the intial launch with more features to come.
+             
+             This is no where near completely finished. Rather it is a start to my desire to incorporate my secular learning into spiritual learning. I don't want to merely just keep reading the Book of Mormon in the same way every time. Rather I hope to use this tool and additional features that I will add in the future.
+             
+             My ultimate desire is to become more like Christ by learning of Him. I hope this tool can be useful to you as you study the Book of Mormon.""")
 
 
 with tab2:
