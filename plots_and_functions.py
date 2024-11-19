@@ -76,7 +76,6 @@ def count_occurrences(long_string, search_term):
 # endregion
 
 # region Plots - WORDS
-import plotly.express as px
 
 def plot_word_histogram(df, text_column, search_term):
     # Ensure the DataFrame has a 'count' column based on occurrences of the search term
@@ -190,4 +189,62 @@ def plot_top_phrases(df, text_column, phrase_length, max_phrases):
         bargap=0.1,  # Adjust bar spacing
     )
 
+    return fig
+
+# endregion
+
+# region Plots - Authors
+def plot_word_histogram_author(df, text_column, search_term):
+    # Ensure the DataFrame has a 'count' column based on occurrences of the search term
+    df['count'] = df[text_column].apply(lambda text: count_occurrences(text, search_term))
+    
+    # Create the histogram
+    fig = px.bar(
+        df,
+        x='Writer',  # Ensure 'name' exists in your DataFrame
+        y='count',  # Using count as the y-axis
+        title=f"Occurrences of '{search_term}' In Each Book",
+        labels={'Writer': 'Writer', 'count': 'Occurrences'},
+    )
+    
+    # Customize the layout
+    fig.update_layout(
+        xaxis_title="Writer",
+        yaxis_title="Count",
+        xaxis=dict(tickangle=45),  # Rotate x-axis labels
+        bargap=0.1  # Adjust bar spacing
+    )
+    
+    # Show the figure
+    return fig
+
+
+def plot_word_histogram_length_author(df, text_column, search_term):
+    # Ensure the DataFrame has a 'count' column based on occurrences of the search term
+    df['count'] = df[text_column].apply(lambda text: count_occurrences(text, search_term))
+    
+    # Calculate the length of each text
+    df['str_length'] = df[text_column].apply(len)
+    
+    # Normalize the count by dividing by text length
+    df['normalized_count'] = df['count'] / df['str_length']
+    
+    # Create the bar plot using normalized counts
+    fig = px.bar(
+        df,
+        x='Writer',  # Ensure 'name' exists in your DataFrame
+        y='normalized_count',  # Use normalized counts as the y-axis
+        title=f"Occurrences of '{search_term}' In Each Book (Normalized by Text Length)",
+        labels={'Writer': 'Writer', 'normalized_count': 'Occurrences (Normalized)'},
+    )
+    
+    # Customize the layout
+    fig.update_layout(
+        xaxis_title="Writer",
+        yaxis_title="Count/Length of Writer's Words",
+        xaxis=dict(tickangle=45),  # Rotate x-axis labels
+        bargap=0.1  # Adjust bar spacing
+    )
+    
+    # Show the figure
     return fig
