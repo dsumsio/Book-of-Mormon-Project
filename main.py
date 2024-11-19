@@ -47,7 +47,7 @@ with tab1:
              
              This is no where near completely finished. Rather it is a start to my desire to incorporate my secular learning into spiritual learning. I don't want to merely just keep reading the Book of Mormon in the same way every time. Rather I hope to use this tool and additional features that I will add in the future.
              
-             My ultimate desire is to become more like Christ by learning of Him. I hope this tool can be useful to you as you study the Book of Mormon.""")
+             My ultimate desire is to become more like Christ by learning of Him. I hope this tool can be useful to you as you study the Book of Mormon."""
     st.write(text)
 
 with tab2:
