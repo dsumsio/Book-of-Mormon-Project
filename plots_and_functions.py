@@ -3,6 +3,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
 from collections import Counter
 import matplotlib.pyplot as plt
+import plotly.express as px
 
 #### REMOVE these
 
@@ -61,29 +62,32 @@ def count_occurrences(long_string, search_term):
 # endregion
 
 # region Plots
+import plotly.express as px
+
 def plot_word_histogram(df, text_column, search_term):
-    # Apply count_occurrences to the text column
+    # Ensure the DataFrame has a 'count' column based on occurrences of the search term
     df['count'] = df[text_column].apply(lambda text: count_occurrences(text, search_term))
     
-    # Create the figure
-    fig, ax = plt.subplots(figsize=(10, 6))
+    # Create the histogram
+    fig = px.histogram(
+        df,
+        x='name',  # Ensure 'name' exists in your DataFrame
+        y='count',  # Using count as the y-axis
+        nbins=len(df),  # One bin per name (optional)
+        title=f"Occurrences of '{search_term}'",
+        labels={'name': 'Names', 'count': 'Occurrences'},
+    )
     
-    # Plot the bar chart using df['name'] for the x-axis
-    ax.bar(df['name'], df['count'], color='skyblue')
+    # Customize the layout
+    fig.update_layout(
+        xaxis_title="Names",
+        yaxis_title="Count of Occurrences",
+        xaxis=dict(tickangle=45),  # Rotate x-axis labels
+        bargap=0.1  # Adjust bar spacing
+    )
     
-    # Set labels and title
-    ax.set_xlabel('Document Name', fontsize=12)
-    ax.set_ylabel('Count of Search Term', fontsize=12)
-    ax.set_title(f"Occurrences of '{search_term}' in Each Document", fontsize=14)
-    
-    # Adjust the x-ticks to show the document names
-    ax.set_xticks(df['name'])  # Set the positions of the ticks to df['name']
-    ax.set_xticklabels(df['name'], rotation=45, ha='right')  # Set labels to the actual names and rotate for readability
-    
-    # Adjust layout to ensure everything fits
-    plt.tight_layout()
-
-    return fig
+    # Show the figure
+    fig.show()
 
 
 
@@ -97,6 +101,7 @@ def plot_word_histogram(df, text_column, search_term):
 
 
 
-x=1
+
+
 
 
