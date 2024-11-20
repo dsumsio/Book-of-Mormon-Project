@@ -76,16 +76,28 @@ def preprocess_text_2(text):
     lemmatizer = WordNetLemmatizer()
     # Convert to lowercase and replace newlines with spaces
     text = text.lower().replace('\n', ' ')
-    # Extract words using regex (ignores punctuation)
-    words = re.findall(r'\b\w+\b', text)
+    # Extract words, numbers, colons, and quotes
+    words = re.findall(r'[a-zA-Z0-9:"]+', text)
     # Lemmatize the words
     lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
     return lemmatized_words
 
+def extract_chapter_verse(text, word_index):
+    """
+    Extract the 'chapter:verse' preceding a word index in the text.
+    """
+    # Look for 'X:Y' (chapter:verse) patterns in the text
+    matches = list(re.finditer(r'\b([1-9]|[1-7][0-9]|8[0-5]):([1-9]|[1-7][0-9]|8[0-5])\b', text))
+    # Find the closest match that comes before the word index
+    for match in reversed(matches):
+        if match.start() <= word_index:
+            return match.group(0)
+    return "Unknown"  # Fallback if no chapter:verse is found
+
 
 def find_word_instances(df, book_name, input_word):
     """
-    Find all instances of a word in the text column of the DataFrame.
+    Find all instances of a word in the text column of the DataFrame, including Book and Chapter:Verse info.
     """
     lemmatizer = WordNetLemmatizer()
     input_word = lemmatizer.lemmatize(input_word.lower())  # Preprocess the input word
@@ -102,16 +114,21 @@ def find_word_instances(df, book_name, input_word):
     # Iterate through the filtered DataFrame
     for _, row in filtered_df.iterrows():
         # Preprocess the text into lemmatized words
-        words = preprocess_text_2(row['text_processed'])
-        # Iterate through the words and find matches
+        words = preprocess_text_2(row['text'])
+        # Search the input word in the processed words
         for i, word in enumerate(words):
             if word == input_word:
                 # Extract 5 words before and after the match
                 snippet = ' '.join(words[max(0, i - 5):i + 6])
-                results.append(snippet)
+                # Find the index of the matched word in the original text
+                word_index = row['text'].lower().find(words[i])
+                # Extract the chapter:verse information
+                chapter_verse = extract_chapter_verse(row['text'], word_index)
+                # Append results with Book, Chapter:Verse, and Snippet
+                results.append({'Book': book_name, 'Chapter:Verse': chapter_verse, 'Text': snippet})
     
-    # Return a DataFrame with all found snippets
-    df_final = pd.DataFrame({'Text': results})
+    # Return a DataFrame with all results
+    df_final = pd.DataFrame(results)
     return df_final
 
 
