@@ -136,7 +136,7 @@ with tab4:
 with tab5:
     st.write('This application will be preiodically updated and incorporate new insights. What would you like seen in future versions?')
     with st.form('my_form'):
-        rating = st.number_input('How would you rate this app?', min_value=0, max_value=10, step=1)
+        rating = st.number_input('How would you rate this app out of 10? (0 = hate it, 10 = love it)', min_value=0, max_value=10, step=1)
         suggestions = st.text_input("How can this app be improved in the future?")
 
         submitted = st.form_submit_button('Submit')
