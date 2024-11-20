@@ -93,7 +93,7 @@ def find_word_instances(df, book_name, input_word):
     # Iterate through the filtered DataFrame
     for _, row in filtered_df.iterrows():
         # Preprocess the text into lemmatized words
-        words = preprocess_text(row['text'])
+        words = preprocess_text(row['text_processed'])
         # Iterate through the words and find matches
         for i, word in enumerate(words):
             if word == input_word:
