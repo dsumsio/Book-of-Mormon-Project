@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('df.csv', index_col='Unnamed: 0')
 df_writers = pd.read_csv('author_bom.csv')
 
-
 st.title('Book of Mormon Text Analysis')
 
 with st.sidebar:
@@ -66,7 +65,42 @@ with tab2:
     st.subheader(f'Instances of {input_word} in Specified Book')
     # Instances of input_word
     input_book = st.radio(f'Find instances of{input_word} in', ['Introduction', '1 Nephi', '2 Nephi', 'Jacob', 'Enos', 'Jarom', 'Omni', 'Words of Mormon', 'Mosiah', 'Alma', 'Helaman', '3 Nephi', '4 Nephi', 'Mormon', 'Ether', 'Moroni', 'Entire Book'])
-    final_df = find_word_instances(df, input_book, input_word)
+    if input_book == 'Introduction':
+        input_book1 = 'intro'
+    if input_book == '1 Nephi':
+        input_book1 = 'nephi1'
+    if input_book == '2 Nephi':
+        input_book1 = 'nephi2'
+    if input_book == 'Jacob':
+        input_book1 = 'jacob'
+    if input_book == 'Enos':
+        input_book1 = 'enos'
+    if input_book == 'Jarom':
+        input_book1 = 'jarom'
+    if input_book == 'Omni':
+        input_book1 = 'omni'
+    if input_book == 'Words of Mormon':
+        input_book1 = 'womormon'
+    if input_book == 'Mosiah':
+        input_book1 = 'mosiah'
+    if input_book == 'Alma':
+        input_book1 = 'alma'
+    if input_book == 'Helaman':
+        input_book1 = 'helaman'
+    if input_book == '3 Nephi':
+        input_book1 = 'nephi3'
+    if input_book == '4 Nephi':
+        input_book1 = 'nephi4'
+    if input_book == 'Mormon':
+        input_book1 = 'mormon'
+    if input_book == 'Ether':
+        input_book1 = 'ether'
+    if input_book == 'Moroni':
+        input_book1 = 'moroni'
+    if input_book == 'Entire Book':
+        input_book1 = 'entire_bom'
+
+    final_df = find_word_instances(df, input_book1, input_word)
     st.data_editor(final_df)
 
     st.subheader('Most and Least Common Words')
