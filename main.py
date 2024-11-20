@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from plots_and_functions import *
+from chatmodel_bom import *
 import re
 import nltk
 nltk.download('wordnet')
@@ -29,7 +30,7 @@ with st.sidebar:
     
 
 
-tab1, tab2, tab3, tab4 = st.tabs(['Project', 'Word', 'Phrase', 'Author'])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(['Project', 'Word', 'Phrase', 'Author', 'Suggestions'])
 
 with tab1:
     st.write('The Book of Mormon is more than just a good religous book.')
@@ -64,7 +65,7 @@ with tab2:
 
     st.subheader(f'Instances of {input_word} in Specified Book')
     # Instances of input_word
-    input_book = st.radio(f'Find instances of{input_word} in', ['Introduction', '1 Nephi', '2 Nephi', 'Jacob', 'Enos', 'Jarom', 'Omni', 'Words of Mormon', 'Mosiah', 'Alma', 'Helaman', '3 Nephi', '4 Nephi', 'Mormon', 'Ether', 'Moroni', 'Entire Book'])
+    input_book = st.radio(f'Find instances of {input_word} in', ['Introduction', '1 Nephi', '2 Nephi', 'Jacob', 'Enos', 'Jarom', 'Omni', 'Words of Mormon', 'Mosiah', 'Alma', 'Helaman', '3 Nephi', '4 Nephi', 'Mormon', 'Ether', 'Moroni', 'Entire Book'])
     if input_book == 'Introduction':
         input_book1 = 'intro'
     if input_book == '1 Nephi':
@@ -132,3 +133,15 @@ with tab4:
     df_writers_copy2 = df_writers.copy()
     fig5 = plot_word_histogram_length_author(df_writers_copy2, 'text_processed', input_word)
     st.plotly_chart(fig5, key="fig5_chart")
+
+with tab5:
+    st.write('This application will be preiodically updated and incorporate new insights. What would you like seen in future versions?')
+    with st.form('my_form'):
+        rating = st.number_input('How would you rate this app?', min_value=0, max_value=10, step=1)
+        suggestions = st.text_input("How can this app be improved in the future?")
+
+        submitted = st.form_submit_button('Submit')
+
+        if submitted:
+            st.write(f"Rating = {rating}")
+            st.write(f"My Suggestions are: {suggestions}")
