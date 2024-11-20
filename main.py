@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('df.csv', index_col='Unnamed: 0')
 df_writers = pd.read_csv('author_bom.csv')
 
+
 st.title('Book of Mormon Text Analysis')
 
 with st.sidebar:

@@ -65,45 +65,44 @@ def get_most_and_least_common_words(text):
     return most_common_str, least_common_str
 
 def count_occurrences(long_string, search_term):
-    # Preprocess the search term
+    preprocessed_long_string = preprocess_text(long_string)
     preprocessed_search_term = preprocess_text(search_term)
     
-    # Count occurrences
-    count = long_string.count(preprocessed_search_term)
-    return count
+    # Use regex to match whole words
+    matches = re.findall(rf'\b{re.escape(preprocessed_search_term)}\b', preprocessed_long_string)
+    return len(matches)
 
 
 
 def find_word_instances(df, book_name, input_word):
-    # Initialize lemmatizer
+    """
+    Find all instances of a word in the text column of the DataFrame.
+    """
     lemmatizer = WordNetLemmatizer()
-
-    # Lowercase and lemmatize the input word
-    input_word = lemmatizer.lemmatize(input_word.lower())
+    input_word = lemmatizer.lemmatize(input_word.lower())  # Preprocess the input word
     
-    # Filter the DataFrame for the selected book
+    # Filter the DataFrame by book name if needed
     if book_name.lower() != "entire book":
         filtered_df = df[df['name'].str.lower() == book_name.lower()]
     else:
-        filtered_df = df  # No filtering, consider all rows
+        filtered_df = df  # Use the entire DataFrame
     
-    # Initialize an empty list to store the results
+    # Initialize a list to store the results
     results = []
     
-    # Iterate over the filtered DataFrame
+    # Iterate through the filtered DataFrame
     for _, row in filtered_df.iterrows():
-        # Ensure text is lowercased and split into words
-        words = row['text'].lower().split()
-        # Iterate through the words to find matches
+        # Preprocess the text into lemmatized words
+        words = preprocess_text(row['text'])
+        # Iterate through the words and find matches
         for i, word in enumerate(words):
-            if lemmatizer.lemmatize(word) == input_word:
-                # Extract 5 words before and after
+            if word == input_word:
+                # Extract 5 words before and after the match
                 snippet = ' '.join(words[max(0, i - 5):i + 6])
                 results.append(snippet)
     
-    # Create the resulting DataFrame
+    # Return a DataFrame with all found snippets
     df_final = pd.DataFrame({'Text': results})
-    
     return df_final
 
 
