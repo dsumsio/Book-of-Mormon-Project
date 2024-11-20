@@ -72,6 +72,15 @@ def count_occurrences(long_string, search_term):
     matches = re.findall(rf'\b{re.escape(preprocessed_search_term)}\b', preprocessed_long_string)
     return len(matches)
 
+def preprocess_text_2(text):
+    lemmatizer = WordNetLemmatizer()
+    # Convert to lowercase and replace newlines with spaces
+    text = text.lower().replace('\n', ' ')
+    # Extract words using regex (ignores punctuation)
+    words = re.findall(r'\b\w+\b', text)
+    # Lemmatize the words
+    lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
+    return lemmatized_words
 
 
 def find_word_instances(df, book_name, input_word):
@@ -93,7 +102,7 @@ def find_word_instances(df, book_name, input_word):
     # Iterate through the filtered DataFrame
     for _, row in filtered_df.iterrows():
         # Preprocess the text into lemmatized words
-        words = preprocess_text(row['text_processed'])
+        words = preprocess_text_2(row['text_processed'])
         # Iterate through the words and find matches
         for i, word in enumerate(words):
             if word == input_word:
