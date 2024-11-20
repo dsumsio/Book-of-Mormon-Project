@@ -100,8 +100,7 @@ with tab2:
     if input_book == 'Entire Book':
         input_book1 = 'entire_bom'
 
-    final_df = find_word_instances(df, input_book1, input_word)
-    st.data_editor(final_df)
+    st.data_editor(find_word_instances(df, input_book1, input_word))
 
     st.subheader('Most and Least Common Words')
     st.write('This section explores the most and least common 10 words across books and the entire book of mormon. Use the Toggle on the left hand side of the page to switch between the most common and least common words. If output is truncated because of the length, hover mouse over top right corner of the table to make it full screen')
