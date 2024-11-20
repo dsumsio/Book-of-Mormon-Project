@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from plots_and_functions import *
-from chatmodel_bom import *
 import re
 import nltk
 nltk.download('wordnet')
