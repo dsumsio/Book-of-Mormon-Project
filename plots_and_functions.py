@@ -115,15 +115,24 @@ def find_word_instances(df, book_name, input_word):
     for _, row in filtered_df.iterrows():
         # Preprocess the text into lemmatized words
         words = preprocess_text_2(row['text'])
+        # Get the full text for chapter:verse extraction
+        full_text = row['text']
+        # Track the position of each word
+        current_position = 0
+
         # Search the input word in the processed words
         for i, word in enumerate(words):
             if word == input_word:
                 # Extract 5 words before and after the match
                 snippet = ' '.join(words[max(0, i - 5):i + 6])
-                # Find the index of the matched word in the original text
-                word_index = row['text'].lower().find(words[i])
+                
+                # Update the word's starting position in the full text
+                match_position = full_text.lower().find(word, current_position)
+                current_position = match_position + len(word)
+                
                 # Extract the chapter:verse information
-                chapter_verse = extract_chapter_verse(row['text'], word_index)
+                chapter_verse = extract_chapter_verse(full_text, match_position)
+                
                 # Append results with Book, Chapter:Verse, and Snippet
                 results.append({'Book': book_name, 'Chapter:Verse': chapter_verse, 'Text': snippet})
     
