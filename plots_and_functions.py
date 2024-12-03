@@ -271,7 +271,7 @@ def plot_word_histogram_author(df, text_column, search_term):
         df,
         x='Writer',  # Ensure 'name' exists in your DataFrame
         y='count',  # Using count as the y-axis
-        title=f"Occurrences of '{search_term}' In Each Book",
+        title=f"Occurrences of '{search_term}' By Each Writer",
         labels={'Writer': 'Writer', 'count': 'Occurrences'},
     )
     
@@ -302,7 +302,7 @@ def plot_word_histogram_length_author(df, text_column, search_term):
         df,
         x='Writer',  # Ensure 'name' exists in your DataFrame
         y='normalized_count',  # Use normalized counts as the y-axis
-        title=f"Occurrences of '{search_term}' In Each Book (Normalized by Text Length)",
+        title=f"Occurrences of '{search_term}' By Each Writer (Normalized by Text Length)",
         labels={'Writer': 'Writer', 'normalized_count': 'Occurrences (Normalized)'},
     )
     
